@@ -11,7 +11,11 @@ import android.view.MenuItem;
 
 import com.kaarvik.lvysaurworkouttracker.R;
 
+import io.realm.Realm;
+
 public class MainActivity extends AppCompatActivity {
+
+    private Realm realm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +32,15 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        //Get realm instance
+        realm = Realm.getDefaultInstance();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        realm.close();
     }
 
     @Override
