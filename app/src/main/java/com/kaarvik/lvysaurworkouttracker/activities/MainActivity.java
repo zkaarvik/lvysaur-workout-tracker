@@ -1,15 +1,23 @@
 package com.kaarvik.lvysaurworkouttracker.activities;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.ListViewAutoScrollHelper;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.AdapterView;
 
 import com.kaarvik.lvysaurworkouttracker.R;
+import com.kaarvik.lvysaurworkouttracker.fragments.WorkoutHistoryFragment;
 
 import io.realm.Realm;
 
@@ -17,21 +25,31 @@ public class MainActivity extends AppCompatActivity {
 
     private Realm realm;
 
+    private String[] drawerListTitles;
+    private DrawerLayout drawerLayout;
+    private ListView drawerList;
+
+    private CharSequence appTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        setContentView(R.layout.drawer_layout);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
+
+        //Set up navigation drawer
+        initializeDrawerList();
 
         //Get realm instance
         realm = Realm.getDefaultInstance();
@@ -41,6 +59,50 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         realm.close();
+    }
+
+    private void initializeDrawerList() {
+        drawerListTitles = getResources().getStringArray(R.array.drawer_titles);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerList = (ListView) findViewById(R.id.left_drawer);
+
+        drawerList.setAdapter(new ArrayAdapter<String>(this,
+                R.layout.drawer_list_item,
+                drawerListTitles));
+        drawerList.setOnItemClickListener(new DrawerItemClickListener());
+    }
+
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            selectItem(position);
+        }
+    }
+
+    /** Swaps fragments in the main content view */
+    private void selectItem(int position) {
+        // Create a new fragment and specify the planet to show based on position
+        Fragment fragment = new WorkoutHistoryFragment();
+        Bundle args = new Bundle();
+//        args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
+        fragment.setArguments(args);
+
+        // Insert the fragment by replacing any existing fragment
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.content_frame, fragment)
+                .commit();
+
+        // Highlight the selected item, update the title, and close the drawer
+        drawerList.setItemChecked(position, true);
+        setTitle(drawerListTitles[position]);
+        drawerLayout.closeDrawer(drawerList);
+    }
+
+    @Override
+    public void setTitle(CharSequence title) {
+        appTitle = title;
+        getSupportActionBar().setTitle(appTitle);
     }
 
     @Override
