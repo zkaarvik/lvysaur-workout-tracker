@@ -17,6 +17,9 @@ import android.widget.ListView;
 import android.widget.AdapterView;
 
 import com.kaarvik.lvysaurworkouttracker.R;
+import com.kaarvik.lvysaurworkouttracker.fragments.FeedbackFragment;
+import com.kaarvik.lvysaurworkouttracker.fragments.GraphsFragment;
+import com.kaarvik.lvysaurworkouttracker.fragments.SettingsFragment;
 import com.kaarvik.lvysaurworkouttracker.fragments.WorkoutHistoryFragment;
 
 import io.realm.Realm;
@@ -81,11 +84,11 @@ public class MainActivity extends AppCompatActivity {
 
     /** Swaps fragments in the main content view */
     private void selectItem(int position) {
-        // Create a new fragment and specify the planet to show based on position
-        Fragment fragment = new WorkoutHistoryFragment();
-        Bundle args = new Bundle();
+        // Create a new fragment according to selection
+        Fragment fragment = getFragmentForSelection(position);
+//        Bundle args = new Bundle();
 //        args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
-        fragment.setArguments(args);
+//        fragment.setArguments(args);
 
         // Insert the fragment by replacing any existing fragment
         FragmentManager fragmentManager = getFragmentManager();
@@ -97,6 +100,31 @@ public class MainActivity extends AppCompatActivity {
         drawerList.setItemChecked(position, true);
         setTitle(drawerListTitles[position]);
         drawerLayout.closeDrawer(drawerList);
+    }
+
+    private Fragment getFragmentForSelection(int position) {
+        String selectedListItem = drawerListTitles[position];
+        Fragment fragment;
+
+        //TODO: Change from hard coded strings..
+        switch (selectedListItem) {
+            default:
+            case "Workouts":
+                fragment = new WorkoutHistoryFragment();
+                break;
+            case "Graphs":
+                fragment = new GraphsFragment();
+                break;
+            case "Settings":
+                fragment = new SettingsFragment();
+                break;
+            case "Feedback":
+                fragment = new FeedbackFragment();
+                break;
+
+        }
+
+        return fragment;
     }
 
     @Override
