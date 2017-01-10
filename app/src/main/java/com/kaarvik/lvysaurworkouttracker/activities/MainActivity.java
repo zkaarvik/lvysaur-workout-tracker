@@ -3,10 +3,7 @@ package com.kaarvik.lvysaurworkouttracker.activities;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.ListViewAutoScrollHelper;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -37,22 +34,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.drawer_layout);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-
         //Set up navigation drawer
         initializeDrawerList();
+
+        //Set default fragment
+        //Todo: Change initalization
+        selectMenuItem(0);
 
         //Get realm instance
         realm = Realm.getDefaultInstance();
@@ -78,12 +69,12 @@ public class MainActivity extends AppCompatActivity {
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            selectItem(position);
+            selectMenuItem(position);
         }
     }
 
     /** Swaps fragments in the main content view */
-    private void selectItem(int position) {
+    private void selectMenuItem(int position) {
         // Create a new fragment according to selection
         Fragment fragment = getFragmentForSelection(position);
 //        Bundle args = new Bundle();
