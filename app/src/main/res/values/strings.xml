@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">lvysaur Workout Tracker</string>
     <string name="action_settings">Settings</string>
+    <string name="drawer_open">Open Drawer</string>
+    <string name="drawer_close">Close Drawer</string>
 
     <string-array name="drawer_titles">
         <item>Workouts</item>
@@ -8,7 +10,4 @@
         <item>Settings</item>
         <item>Feedback</item>
     </string-array>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
