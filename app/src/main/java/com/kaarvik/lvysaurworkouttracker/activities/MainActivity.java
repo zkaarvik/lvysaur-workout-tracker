@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.AdapterView;
 
 import com.kaarvik.lvysaurworkouttracker.R;
+import com.kaarvik.lvysaurworkouttracker.adapters.DrawerListAdapter;
 import com.kaarvik.lvysaurworkouttracker.fragments.FeedbackFragment;
 import com.kaarvik.lvysaurworkouttracker.fragments.GraphsFragment;
 import com.kaarvik.lvysaurworkouttracker.fragments.SettingsFragment;
@@ -46,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
         initializeDrawer();
 
         //Set default fragment
-        //Todo: Change initalization
         selectMenuItem(0);
 
         //Get realm instance
@@ -61,12 +61,16 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializeDrawer() {
         drawerListTitles = getResources().getStringArray(R.array.drawer_titles);
+        int[] drawerListIcons = {R.drawable.ic_drawer_workout, R.drawable.ic_drawer_graphs,
+            R.drawable.ic_settings, R.drawable.ic_drawer_feedback};
+
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerList = (ListView) findViewById(R.id.left_drawer);
 
-        drawerList.setAdapter(new ArrayAdapter<String>(this,
-                R.layout.drawer_list_item,
-                drawerListTitles));
+//        drawerList.setAdapter(new ArrayAdapter<String>(this,
+//                R.layout.drawer_list_item,
+//                drawerListTitles));
+        drawerList.setAdapter(new DrawerListAdapter(this, drawerListTitles, drawerListIcons));
         drawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout,
@@ -148,9 +152,6 @@ public class MainActivity extends AppCompatActivity {
     private void selectMenuItem(int position) {
         // Create a new fragment according to selection
         Fragment fragment = getFragmentForSelection(position);
-//        Bundle args = new Bundle();
-//        args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
-//        fragment.setArguments(args);
 
         // Insert the fragment by replacing any existing fragment
         FragmentManager fragmentManager = getFragmentManager();
