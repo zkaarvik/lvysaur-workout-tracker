@@ -67,9 +67,6 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerList = (ListView) findViewById(R.id.left_drawer);
 
-//        drawerList.setAdapter(new ArrayAdapter<String>(this,
-//                R.layout.drawer_list_item,
-//                drawerListTitles));
         drawerList.setAdapter(new DrawerListAdapter(this, drawerListTitles, drawerListIcons));
         drawerList.setOnItemClickListener(new DrawerItemClickListener());
 
