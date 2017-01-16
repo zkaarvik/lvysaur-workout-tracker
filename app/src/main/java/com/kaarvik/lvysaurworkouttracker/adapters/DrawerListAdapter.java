@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kaarvik.lvysaurworkouttracker.R;
+import com.kaarvik.lvysaurworkouttracker.data.DrawerListItem;
 
 /**
  * Created by Zach on 1/14/2017.
@@ -17,23 +18,21 @@ import com.kaarvik.lvysaurworkouttracker.R;
 public class DrawerListAdapter extends BaseAdapter {
 
     private Context mContext;
-    private String[] titles;
-    private int[] icons;
+    private DrawerListItem[] drawerListItems;
 
-    public DrawerListAdapter(Context mContext, String[] titles, int[] icons) {
+    public DrawerListAdapter(Context mContext, DrawerListItem[] drawerListItems) {
         this.mContext = mContext;
-        this.titles = titles;
-        this.icons = icons;
+        this.drawerListItems = drawerListItems;
     }
 
     @Override
     public int getCount() {
-        return titles.length;
+        return drawerListItems.length;
     }
 
     @Override
-    public String getItem(int position) {
-        return titles[position];
+    public DrawerListItem getItem(int position) {
+        return drawerListItems[position];
     }
 
     @Override
@@ -47,10 +46,10 @@ public class DrawerListAdapter extends BaseAdapter {
         View row = inflater.inflate(R.layout.drawer_list_item, parent, false);
 
         TextView title = (TextView) row.findViewById(R.id.drawer_title);
-        title.setText(titles[position]);
+        title.setText(drawerListItems[position].getTitle());
 
         ImageView icon = (ImageView) row.findViewById(R.id.drawer_icon);
-        icon.setImageResource(icons[position]);
+        icon.setImageResource(drawerListItems[position].getIcon());
 
         return row;
     }

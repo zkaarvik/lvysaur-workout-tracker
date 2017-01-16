@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 
 import com.kaarvik.lvysaurworkouttracker.R;
 import com.kaarvik.lvysaurworkouttracker.adapters.DrawerListAdapter;
+import com.kaarvik.lvysaurworkouttracker.data.DrawerListItem;
 import com.kaarvik.lvysaurworkouttracker.fragments.FeedbackFragment;
 import com.kaarvik.lvysaurworkouttracker.fragments.GraphsFragment;
 import com.kaarvik.lvysaurworkouttracker.fragments.SettingsFragment;
@@ -28,10 +29,11 @@ public class MainActivity extends AppCompatActivity {
 
     private Realm realm;
 
-    private String[] drawerListTitles;
+    private DrawerListItem[] drawerListItems;
     private DrawerLayout drawerLayout;
     private ListView drawerList;
     private ActionBarDrawerToggle drawerToggle;
+
     private Toolbar toolbar;
 
     private CharSequence appTitle;
@@ -60,14 +62,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initializeDrawer() {
-        drawerListTitles = getResources().getStringArray(R.array.drawer_titles);
-        int[] drawerListIcons = {R.drawable.ic_drawer_workout, R.drawable.ic_drawer_graphs,
-            R.drawable.ic_settings, R.drawable.ic_drawer_feedback};
+        drawerListItems = DrawerListItem.DrawerListItemFactory(this);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerList = (ListView) findViewById(R.id.left_drawer);
 
-        drawerList.setAdapter(new DrawerListAdapter(this, drawerListTitles, drawerListIcons));
+        drawerList.setAdapter(new DrawerListAdapter(this, drawerListItems));
         drawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout,
@@ -158,27 +158,27 @@ public class MainActivity extends AppCompatActivity {
 
         // Highlight the selected item, update the title, and close the drawer
         drawerList.setItemChecked(position, true);
-        setTitle(drawerListTitles[position]);
+        setTitle(drawerListItems[position].getTitle());
         drawerLayout.closeDrawer(drawerList);
     }
 
     private Fragment getFragmentForSelection(int position) {
-        String selectedListItem = drawerListTitles[position];
+        String selectedListItem = drawerListItems[position].getId();
         Fragment fragment;
 
         //TODO: Change from hard coded strings..
         switch (selectedListItem) {
             default:
-            case "Workouts":
+            case DrawerListItem.FRAGMENT_WORKOUT:
                 fragment = new WorkoutHistoryFragment();
                 break;
-            case "Graphs":
+            case DrawerListItem.FRAGMENT_GRAPHS:
                 fragment = new GraphsFragment();
                 break;
-            case "Settings":
+            case DrawerListItem.FRAGMENT_SETTINGS:
                 fragment = new SettingsFragment();
                 break;
-            case "Feedback":
+            case DrawerListItem.FRAGMENT_FEEDBACK:
                 fragment = new FeedbackFragment();
                 break;
 
