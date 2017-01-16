@@ -1,7 +1,9 @@
 package com.kaarvik.lvysaurworkouttracker.fragments;
 
+import android.app.ActivityOptions;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.kaarvik.lvysaurworkouttracker.R;
+import com.kaarvik.lvysaurworkouttracker.activities.WorkoutActivity;
 
 public class WorkoutHistoryFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
@@ -63,12 +66,22 @@ public class WorkoutHistoryFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                createNewWorkout(view);
             }
         });
 
         // Inflate the layout for this fragment
         return rootView;
+    }
+
+    public void createNewWorkout(View view) {
+//        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                .setAction("Action", null).show();
+
+        //TODO: Create the workout object and pass here or not..?
+
+        //Start the workout activity
+        Intent intent = new Intent(getActivity(), WorkoutActivity.class);
+        startActivity(intent);
     }
 }
