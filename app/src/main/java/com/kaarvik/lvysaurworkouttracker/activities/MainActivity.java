@@ -27,17 +27,12 @@ public class MainActivity extends AppCompatActivity
     private Realm realm;
 
     private DrawerLayout drawerLayout;
-    private ActionBarDrawerToggle drawerToggle;
-
-    private Toolbar toolbar;
-
-    private CharSequence appTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         //Set up navigation drawer
@@ -59,7 +54,7 @@ public class MainActivity extends AppCompatActivity
     private void initializeDrawer(Toolbar toolbar) {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
+        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
                 R.string.drawer_open, R.string.drawer_close);
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
@@ -135,8 +130,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void setTitle(CharSequence title) {
-        appTitle = title;
-        getSupportActionBar().setTitle(appTitle);
+        getSupportActionBar().setTitle(title);
     }
 
     @Override

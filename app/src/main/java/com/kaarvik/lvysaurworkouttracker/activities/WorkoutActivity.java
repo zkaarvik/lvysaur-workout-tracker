@@ -8,13 +8,7 @@ import android.support.v7.widget.Toolbar;
 import com.kaarvik.lvysaurworkouttracker.R;
 
 
-/**
- * Created by Zach on 1/15/2017.
- */
-
 public class WorkoutActivity extends AppCompatActivity {
-
-    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
