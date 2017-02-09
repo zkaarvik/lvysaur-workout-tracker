@@ -78,7 +78,7 @@ public class WorkoutHistoryFragment extends Fragment {
 //        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                .setAction("Action", null).show();
 
-        //TODO: Create the workout object and pass here or not..?
+        //TODO: Pass workout ID if exists
 
         //Start the workout activity
         Intent intent = new Intent(getActivity(), WorkoutActivity.class);

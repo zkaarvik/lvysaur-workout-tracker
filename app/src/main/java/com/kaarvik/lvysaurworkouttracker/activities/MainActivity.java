@@ -166,7 +166,6 @@ public class MainActivity extends AppCompatActivity {
         String selectedListItem = drawerListItems[position].getId();
         Fragment fragment;
 
-        //TODO: Change from hard coded strings..
         switch (selectedListItem) {
             default:
             case DrawerListItem.FRAGMENT_WORKOUT:
