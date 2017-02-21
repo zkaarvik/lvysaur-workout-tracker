@@ -7,13 +7,14 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.kaarvik.lvysaurworkouttracker.R;
 import com.kaarvik.lvysaurworkouttracker.activities.WorkoutActivity;
+
+import static com.kaarvik.lvysaurworkouttracker.utils.Constants.EXTRA_WORKOUTID;
 
 public class WorkoutHistoryFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
@@ -66,7 +67,7 @@ public class WorkoutHistoryFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                createNewWorkout(view);
+                onClickFloatingActionButton(view);
             }
         });
 
@@ -74,14 +75,16 @@ public class WorkoutHistoryFragment extends Fragment {
         return rootView;
     }
 
-    public void createNewWorkout(View view) {
-//        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                .setAction("Action", null).show();
+    public void onClickFloatingActionButton(View view) {
+        createNewWorkout(-1);
+    }
 
+    public void createNewWorkout(long id) {
         //TODO: Pass workout ID if exists
 
         //Start the workout activity
         Intent intent = new Intent(getActivity(), WorkoutActivity.class);
+        intent.putExtra(EXTRA_WORKOUTID, id);
         startActivity(intent);
     }
 }
