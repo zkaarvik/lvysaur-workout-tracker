@@ -14,6 +14,15 @@ public class Set extends RealmObject {
     private int goalReps;
     private int completedReps;
     private double weight;
+    private boolean isAmrap;
+
+    public boolean isAmrap() {
+        return isAmrap;
+    }
+
+    public void setAmrap(boolean amrap) {
+        isAmrap = amrap;
+    }
 
     public long getId() {
         return id;
