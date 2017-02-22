@@ -15,7 +15,10 @@ public class WorkoutApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Realm.init(this);
-        RealmConfiguration config = new RealmConfiguration.Builder().build();
+        RealmConfiguration config = new RealmConfiguration
+                .Builder()
+                .deleteRealmIfMigrationNeeded() //TODO: REMOVE...
+                .build();
         Realm.setDefaultConfiguration(config);
     }
 }

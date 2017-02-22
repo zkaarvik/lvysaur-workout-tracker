@@ -51,6 +51,9 @@ public class WorkoutActivity extends AppCompatActivity {
     private void loadWorkout(long workoutId) {
         if (workoutId == -1) {
             //Create a new workout
+            //Todo: Get previous workout
+            Workout lastWorkout = null;
+            workout = workoutProgram.getNextWorkout(realm, lastWorkout);
         } else {
             //Workout already exists
             workout = DataProvider.getWorkout(realm, workoutId);

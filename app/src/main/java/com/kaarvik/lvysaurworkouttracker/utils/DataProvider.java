@@ -21,4 +21,22 @@ public final class DataProvider {
             return results.get(0);
         }
     }
+
+    public static Workout createNewWorkout(Realm realm) {
+        realm.beginTransaction();
+
+        Number currentMaxId = realm.where(Workout.class).max("id");
+        long newId;
+        if(currentMaxId == null) {
+            newId = 1;
+        } else {
+            newId = currentMaxId.longValue() + 1;
+        }
+
+        Workout newWorkout = realm.createObject(Workout.class, newId);
+
+        realm.commitTransaction();
+
+        return newWorkout;
+    }
 }
