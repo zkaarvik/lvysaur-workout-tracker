@@ -9,6 +9,8 @@ import io.realm.annotations.PrimaryKey;
  */
 
 public class Exercise extends RealmObject {
+
+
     @PrimaryKey
     private long id;
     private String type;

@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.kaarvik.lvysaurworkouttracker.R;
 import com.kaarvik.lvysaurworkouttracker.data.Workout;
-import com.kaarvik.lvysaurworkouttracker.interfaces.WorkoutProgram;
+import com.kaarvik.lvysaurworkouttracker.program.WorkoutProgram;
 import com.kaarvik.lvysaurworkouttracker.program.PhrakGreyskullProgram;
 import com.kaarvik.lvysaurworkouttracker.utils.DataProvider;
 
@@ -31,7 +31,7 @@ public class WorkoutActivity extends AppCompatActivity {
         realm = Realm.getDefaultInstance();
 
         //Get the workout program we are using
-        getWorkoutProgram();
+        getWorkoutProgram(realm);
 
         //Receive the intent and get any passed workout id
         Intent intent = getIntent();
@@ -43,9 +43,9 @@ public class WorkoutActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
-    private void getWorkoutProgram() {
+    private void getWorkoutProgram(Realm realm) {
         //Todo: Handle this elsewhere, should be able to swap program easily
-        workoutProgram = new PhrakGreyskullProgram();
+        workoutProgram = new PhrakGreyskullProgram(realm);
     }
 
     private void loadWorkout(long workoutId) {
@@ -53,7 +53,7 @@ public class WorkoutActivity extends AppCompatActivity {
             //Create a new workout
             //Todo: Get previous workout
             Workout lastWorkout = null;
-            workout = workoutProgram.getNextWorkout(realm, lastWorkout);
+            workout = workoutProgram.getNextWorkout(lastWorkout);
         } else {
             //Workout already exists
             workout = DataProvider.getWorkout(realm, workoutId);
