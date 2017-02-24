@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
 import com.kaarvik.lvysaurworkouttracker.R;
+import com.kaarvik.lvysaurworkouttracker.data.Exercise;
 import com.kaarvik.lvysaurworkouttracker.data.Workout;
 import com.kaarvik.lvysaurworkouttracker.program.WorkoutProgram;
 import com.kaarvik.lvysaurworkouttracker.program.PhrakGreyskullProgram;
@@ -45,7 +46,7 @@ public class WorkoutActivity extends AppCompatActivity {
 
     private void getWorkoutProgram(Realm realm) {
         //Todo: Handle this elsewhere, should be able to swap program easily
-        workoutProgram = new PhrakGreyskullProgram(realm);
+        workoutProgram = new PhrakGreyskullProgram();
     }
 
     private void loadWorkout(long workoutId) {
@@ -54,6 +55,7 @@ public class WorkoutActivity extends AppCompatActivity {
             //Todo: Get previous workout
             Workout lastWorkout = null;
             workout = workoutProgram.getNextWorkout(lastWorkout);
+
         } else {
             //Workout already exists
             workout = DataProvider.getWorkout(realm, workoutId);

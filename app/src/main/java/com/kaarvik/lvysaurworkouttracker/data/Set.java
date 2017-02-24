@@ -10,7 +10,6 @@ import io.realm.annotations.PrimaryKey;
 public class Set extends RealmObject {
     @PrimaryKey
     private long id;
-    private String type;
     private int goalReps;
     private int completedReps;
     private double weight;
@@ -30,14 +29,6 @@ public class Set extends RealmObject {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public int getGoalReps() {

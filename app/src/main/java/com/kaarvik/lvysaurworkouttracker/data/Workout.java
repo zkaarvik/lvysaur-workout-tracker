@@ -18,6 +18,14 @@ public class Workout extends RealmObject {
     private double bodyWeight;
     private RealmList<Exercise> exercises;
 
+    public Workout() {
+        exercises = new RealmList<>();
+    }
+
+    public void addExercise(Exercise exercise) {
+        exercises.add(exercise);
+    }
+
     public long getId() {
         return id;
     }

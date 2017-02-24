@@ -17,6 +17,19 @@ public class Exercise extends RealmObject {
     private RealmList<Set> sets;
     private RealmList<Set> warmups;
 
+    public Exercise() {
+        sets = new RealmList<>();
+        warmups = new RealmList<>();
+    }
+
+    public void addSet(Set set) {
+        sets.add(set);
+    }
+
+    public void addWarmup(Set warmup) {
+        warmups.add(warmup);
+    }
+
     public long getId() {
         return id;
     }

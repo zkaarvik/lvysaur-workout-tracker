@@ -25,6 +25,10 @@ public final class DataProvider {
         }
     }
 
+    public static Workout saveWorkout(Realm realm, Workout workout) {
+        return null;
+    }
+
     public static Workout createNewWorkout(Realm realm, String type, Date date, double bodyWeight) {
         realm.beginTransaction();
 

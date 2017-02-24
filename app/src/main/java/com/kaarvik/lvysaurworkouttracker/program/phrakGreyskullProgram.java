@@ -26,10 +26,6 @@ public class PhrakGreyskullProgram extends WorkoutProgram {
     public static final String TYPE_D2T1 = "D2T1";
     public static final String TYPE_D2T2 = "D2T2";
 
-    public PhrakGreyskullProgram(Realm realm) {
-        super(realm);
-    }
-
     @Override
     public Workout getNextWorkout(Workout lastWorkout) {
         if (lastWorkout == null || lastWorkout.getType() == TYPE_D1T1) {
@@ -47,15 +43,17 @@ public class PhrakGreyskullProgram extends WorkoutProgram {
      * 3x5 Squats
      */
     private Workout buildD1T1Workout() {
-        Workout initialWorkout = buildWorkout(TYPE_D1T1, -1);
+        Workout newWorkout = buildWorkout(TYPE_D1T1, -1);
         
-        Exercise overheadPress = buildExcercise(ExerciseType.TYPE_OVERHEADPRESS, 3, 45);
-        Exercise chinups = buildExcercise(ExerciseType.TYPE_CHINUPS, 3, 0);
-        Exercise squats = buildExcercise(ExerciseType.TYPE_SQUAT, 3, 45);
+        Exercise overheadPress = buildExcercise(ExerciseType.TYPE_OVERHEADPRESS, 3, 5, 45);
+        Exercise chinups = buildExcercise(ExerciseType.TYPE_CHINUPS, 3, 5, 0);
+        Exercise squats = buildExcercise(ExerciseType.TYPE_SQUAT, 3, 5, 45);
 
-        //TODO: Add to list
+        newWorkout.addExercise(overheadPress);
+        newWorkout.addExercise(chinups);
+        newWorkout.addExercise(squats);
         
-        return initialWorkout;
+        return newWorkout;
     }
 
     /*
