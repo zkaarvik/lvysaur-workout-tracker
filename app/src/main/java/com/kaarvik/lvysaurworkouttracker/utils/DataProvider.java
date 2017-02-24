@@ -1,11 +1,13 @@
 package com.kaarvik.lvysaurworkouttracker.utils;
 
 import com.kaarvik.lvysaurworkouttracker.data.Exercise;
+import com.kaarvik.lvysaurworkouttracker.data.Set;
 import com.kaarvik.lvysaurworkouttracker.data.Workout;
 
 import java.util.Date;
 
 import io.realm.Realm;
+import io.realm.RealmList;
 import io.realm.RealmResults;
 
 /**
@@ -26,14 +28,23 @@ public final class DataProvider {
     }
 
     public static Workout saveWorkout(Realm realm, Workout workout) {
-        return null;
+        //We need to give the workout and its components ids if the workout is not managed by realm yet
+
+        if (!workout.isManaged()) {
+            setWorkoutIds(realm, workout);
+        }
+
+        realm.beginTransaction();
+        Workout savedWorkout = realm.copyToRealmOrUpdate(workout);
+        realm.commitTransaction();
+
+        return savedWorkout;
     }
 
     public static Workout createNewWorkout(Realm realm, String type, Date date, double bodyWeight) {
         realm.beginTransaction();
 
-        Number currentMaxId = realm.where(Workout.class).max("id");
-        long newId = getNextId(currentMaxId);
+        long newId = getNextId(realm, Workout.class);
 
         Workout newWorkout = realm.createObject(Workout.class, newId);
         newWorkout.setType(type);
@@ -48,8 +59,7 @@ public final class DataProvider {
     public static Exercise createNewExcercise(Realm realm, String type) {
         realm.beginTransaction();
 
-        Number currentMaxId = realm.where(Exercise.class).max("id");
-        long newId = getNextId(currentMaxId);
+        long newId = getNextId(realm, Exercise.class);
 
         Exercise newExercise = realm.createObject(Exercise.class, newId);
         newExercise.setType(type);
@@ -59,13 +69,42 @@ public final class DataProvider {
         return newExercise;
     }
 
-    private static long getNextId(Number lastId) {
-        long newId;
+    private static long getNextId(Realm realm, Class clazz) {
+        Number lastId = realm.where(clazz).max("id");
+
         if(lastId == null) {
-            newId = 1;
+            return 1;
         } else {
-            newId = lastId.longValue() + 1;
+            return lastId.longValue() + 1;
         }
-        return newId;
+    }
+
+    private static void setWorkoutIds(Realm realm, Workout workout) {
+        int i = 0, j = 0;
+
+        //Set sequential ids for workouts, exercises, sets, warmups
+        workout.setId(getNextId(realm, Workout.class));
+
+        //For each exercise, set id and iterate sets and warmups
+        long nextExerciseId = getNextId(realm, Exercise.class);
+        long nextSetId = getNextId(realm, Set.class);
+
+        for (Exercise exercise : workout.getExercises()) {
+            exercise.setId(nextExerciseId + i);
+
+            //Set ids for work sets
+            for (Set set : exercise.getSets()) {
+                set.setId(nextSetId + j);
+                j++;
+            }
+
+            //Set ids for warmup sets
+            for (Set warmup : exercise.getWarmups()) {
+                warmup.setId(nextSetId + j);
+                j++;
+            }
+
+            i++;
+        }
     }
 }

@@ -55,6 +55,7 @@ public class WorkoutActivity extends AppCompatActivity {
             //Todo: Get previous workout
             Workout lastWorkout = null;
             workout = workoutProgram.getNextWorkout(lastWorkout);
+            DataProvider.saveWorkout(realm, workout);
 
         } else {
             //Workout already exists
