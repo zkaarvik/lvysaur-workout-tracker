@@ -49,6 +49,11 @@ public class PhrakGreyskullProgram extends WorkoutProgram {
         Exercise chinups = buildExcercise(ExerciseType.TYPE_CHINUPS, 3, 5, 0);
         Exercise squats = buildExcercise(ExerciseType.TYPE_SQUAT, 3, 5, 45);
 
+        //Mark last sets as AMRAP
+        overheadPress.getSets().get(2).setAmrap(true);
+        chinups.getSets().get(2).setAmrap(true);
+        squats.getSets().get(2).setAmrap(true);
+
         newWorkout.addExercise(overheadPress);
         newWorkout.addExercise(chinups);
         newWorkout.addExercise(squats);

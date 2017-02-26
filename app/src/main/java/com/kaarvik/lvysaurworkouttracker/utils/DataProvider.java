@@ -41,34 +41,6 @@ public final class DataProvider {
         return savedWorkout;
     }
 
-    public static Workout createNewWorkout(Realm realm, String type, Date date, double bodyWeight) {
-        realm.beginTransaction();
-
-        long newId = getNextId(realm, Workout.class);
-
-        Workout newWorkout = realm.createObject(Workout.class, newId);
-        newWorkout.setType(type);
-        newWorkout.setDate(date);
-        newWorkout.setBodyWeight(bodyWeight);
-
-        realm.commitTransaction();
-
-        return newWorkout;
-    }
-
-    public static Exercise createNewExcercise(Realm realm, String type) {
-        realm.beginTransaction();
-
-        long newId = getNextId(realm, Exercise.class);
-
-        Exercise newExercise = realm.createObject(Exercise.class, newId);
-        newExercise.setType(type);
-
-        realm.commitTransaction();
-
-        return newExercise;
-    }
-
     private static long getNextId(Realm realm, Class clazz) {
         Number lastId = realm.where(clazz).max("id");
 

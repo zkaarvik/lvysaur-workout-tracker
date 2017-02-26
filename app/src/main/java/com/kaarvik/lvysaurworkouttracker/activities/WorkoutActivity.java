@@ -44,6 +44,12 @@ public class WorkoutActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        realm.close();
+    }
+
     private void getWorkoutProgram(Realm realm) {
         //Todo: Handle this elsewhere, should be able to swap program easily
         workoutProgram = new PhrakGreyskullProgram();
@@ -55,7 +61,7 @@ public class WorkoutActivity extends AppCompatActivity {
             //Todo: Get previous workout
             Workout lastWorkout = null;
             workout = workoutProgram.getNextWorkout(lastWorkout);
-            DataProvider.saveWorkout(realm, workout);
+            workout = DataProvider.saveWorkout(realm, workout);
 
         } else {
             //Workout already exists
