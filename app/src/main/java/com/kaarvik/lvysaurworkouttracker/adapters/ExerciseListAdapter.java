@@ -1,13 +1,18 @@
 package com.kaarvik.lvysaurworkouttracker.adapters;
 
+import android.support.v7.widget.ListViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.kaarvik.lvysaurworkouttracker.R;
 import com.kaarvik.lvysaurworkouttracker.data.Exercise;
+import com.kaarvik.lvysaurworkouttracker.utils.ExerciseType;
 
 import io.realm.RealmList;
 
@@ -18,6 +23,8 @@ import io.realm.RealmList;
 public class ExerciseListAdapter extends RecyclerView.Adapter<ExerciseListAdapter.ViewHolder> {
 
     private RealmList<Exercise> mDataset;
+    private ListView mListView;
+    private Adapter mAdapter;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -52,11 +59,16 @@ public class ExerciseListAdapter extends RecyclerView.Adapter<ExerciseListAdapte
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
-        //holder.mTextView.setText(mDataset[position]);
+        Exercise exercise = mDataset.get(position);
+        String exerciseName = ExerciseType.getText(holder.mView.getContext(), exercise.getType());
+
         TextView textView = (TextView) holder.mView.findViewById(R.id.test_text);
-        textView.setText(mDataset.get(position).getType());
+        textView.setText(exerciseName);
+
+        //Setup the set list
+        mListView = (ListView) holder.mView.findViewById(R.id.set_list_view);
+        mAdapter = new SetListAdapter(mDataset.get(position).getSets());
+        mListView.setAdapter((ListAdapter) mAdapter);
 
     }
 

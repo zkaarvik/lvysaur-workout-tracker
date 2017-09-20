@@ -5,6 +5,14 @@
     <string name="drawer_open">Open Drawer</string>
     <string name="drawer_close">Close Drawer</string>
 
+    <!-- Exercise Types -->
+    <string name="exercise_TYPE_SQUAT">Squat</string>
+    <string name="exercise_TYPE_DEADLIFT">Deadlift</string>
+    <string name="exercise_TYPE_OVERHEADPRESS">Overhead Press</string>
+    <string name="exercise_TYPE_BENCHPRESS">Bench Press</string>
+    <string name="exercise_TYPE_CHINUPS">Chinups</string>
+    <string name="exercise_TYPE_BARBELLROWS">Barbell Row</string>
+
     <string-array name="drawer_titles">
         <item>Workout History</item>
         <item>Graphs</item>
