@@ -55,27 +55,24 @@
             android:divider="?android:dividerVertical"
             android:showDividers="middle">
 
-                <ListView
-                    android:id="@+id/set_list_view"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:dividerHeight="0dp"
-                    android:divider="@null"
-                    android:choiceMode="none"
-                    android:layout_weight="1"
-                    tools:listitem="@layout/fragment_single_set"/>
+            <LinearLayout
+                android:id="@+id/set_list"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
 
-                <TextView
-                    android:id="@+id/text_weight"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0"
-                    android:gravity="center"
-                    android:text="125lbs"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    tools:text="125lbs" />
+            <TextView
+                android:id="@+id/text_weight"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:gravity="center"
+                android:text="125lbs"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                tools:text="125lbs" />
 
             </LinearLayout>
 

@@ -6,13 +6,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.kaarvik.lvysaurworkouttracker.R;
 import com.kaarvik.lvysaurworkouttracker.data.Exercise;
+import com.kaarvik.lvysaurworkouttracker.data.Set;
 import com.kaarvik.lvysaurworkouttracker.utils.ExerciseType;
+import com.kaarvik.lvysaurworkouttracker.views.RepsNumberButton;
 
 import io.realm.RealmList;
 
@@ -32,6 +35,7 @@ public class ExerciseListAdapter extends RecyclerView.Adapter<ExerciseListAdapte
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public View mView;
+        public RealmList<Set> sets;
         public ViewHolder(View v) {
             super(v);
             mView = v;
@@ -50,9 +54,8 @@ public class ExerciseListAdapter extends RecyclerView.Adapter<ExerciseListAdapte
         // create a new view
         View v = (View) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_single_exercise, parent, false);
-        // set the view's size, margins, paddings and layout parameters
-
         ViewHolder vh = new ViewHolder(v);
+
         return vh;
     }
 
@@ -65,11 +68,30 @@ public class ExerciseListAdapter extends RecyclerView.Adapter<ExerciseListAdapte
         TextView textView = (TextView) holder.mView.findViewById(R.id.text_exercise_name);
         textView.setText(exerciseName);
 
-        //Setup the set list
-        mListView = (ListView) holder.mView.findViewById(R.id.set_list_view);
-        mAdapter = new SetListAdapter(mDataset.get(position).getSets());
-        mListView.setAdapter((ListAdapter) mAdapter);
+        //Setup set list
+        holder.sets = mDataset.get(position).getSets();
+        LayoutInflater layoutInflater = LayoutInflater.from(holder.mView.getContext());
+        LinearLayout setListLayout = (LinearLayout) holder.mView.findViewById(R.id.set_list);
 
+        for(int i = 0; i < holder.sets.size(); i++){
+            addSetView(layoutInflater, setListLayout, holder.sets.get(i));
+        }
+    }
+
+    private View addSetView(LayoutInflater layoutInflater, LinearLayout setListLayout, final Set set) {
+        View setView = layoutInflater.inflate(R.layout.fragment_single_set, setListLayout, false);
+        setListLayout.addView(setView);
+
+        final RepsNumberButton button = (RepsNumberButton) setView.findViewById(R.id.button_set_reps);
+        button.setOnClickListener(new RepsNumberButton.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int num = Integer.parseInt(button.getNumber());
+                //set.setCompletedReps(num);
+            }
+        });
+
+        return setView;
     }
 
     // Return the size of your dataset (invoked by the layout manager)
