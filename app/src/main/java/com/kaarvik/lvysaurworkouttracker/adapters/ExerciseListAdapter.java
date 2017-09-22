@@ -62,7 +62,7 @@ public class ExerciseListAdapter extends RecyclerView.Adapter<ExerciseListAdapte
         Exercise exercise = mDataset.get(position);
         String exerciseName = ExerciseType.getText(holder.mView.getContext(), exercise.getType());
 
-        TextView textView = (TextView) holder.mView.findViewById(R.id.test_text);
+        TextView textView = (TextView) holder.mView.findViewById(R.id.text_exercise_name);
         textView.setText(exerciseName);
 
         //Setup the set list

@@ -6,8 +6,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.kaarvik.lvysaurworkouttracker.R;
 import com.kaarvik.lvysaurworkouttracker.data.Set;
+import com.kaarvik.lvysaurworkouttracker.views.RepsNumberButton;
 
 import io.realm.RealmList;
 
@@ -46,8 +48,17 @@ public class SetListAdapter extends BaseAdapter {
                     .inflate(R.layout.fragment_single_set, container, false);
         }
 
-        TextView textView = (TextView) convertView.findViewById(R.id.test_text2);
-        textView.setText(mDataset.get(position).getGoalReps() + "");
+        Set set = mDataset.get(position);
+        double setWeight = set.getWeight();
+        int setReps = set.getGoalReps();
+
+        final RepsNumberButton button = (RepsNumberButton) convertView.findViewById(R.id.button_set_reps);
+        button.setOnClickListener(new RepsNumberButton.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String num = button.getNumber();
+            }
+        });
 
         return convertView;
     }

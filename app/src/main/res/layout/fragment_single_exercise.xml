@@ -20,22 +20,64 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="8dp"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/test_text"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="10dp"
-                tools:text="Placeholder" />
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal">
 
-            <ListView
-                android:id="@+id/set_list_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:choiceMode="none"
-                tools:listitem="@layout/fragment_single_set"/>
+                <TextView
+                    android:id="@+id/text_exercise_name"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    tools:text="Exercise Name" />
+
+                <TextView
+                    android:id="@+id/text_sets_reps"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0"
+                    android:gravity="center"
+                    android:text="3 sets 5 reps"
+                    tools:text="3 sets 5 reps" />
+            </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:divider="?android:dividerVertical"
+            android:showDividers="middle">
+
+                <ListView
+                    android:id="@+id/set_list_view"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:dividerHeight="0dp"
+                    android:divider="@null"
+                    android:choiceMode="none"
+                    android:layout_weight="1"
+                    tools:listitem="@layout/fragment_single_set"/>
+
+                <TextView
+                    android:id="@+id/text_weight"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0"
+                    android:gravity="center"
+                    android:text="125lbs"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    tools:text="125lbs" />
+
+            </LinearLayout>
 
         </LinearLayout>
     </android.support.v7.widget.CardView>

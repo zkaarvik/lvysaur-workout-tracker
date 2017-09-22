@@ -13,6 +13,8 @@
     <string name="exercise_TYPE_CHINUPS">Chinups</string>
     <string name="exercise_TYPE_BARBELLROWS">Barbell Row</string>
 
+    <string name="set_weight">%1$.0flbs x %2$d</string>
+
     <string-array name="drawer_titles">
         <item>Workout History</item>
         <item>Graphs</item>
