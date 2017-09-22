@@ -1,8 +1,14 @@
 package com.kaarvik.lvysaurworkouttracker.views;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.ColorInt;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
@@ -52,5 +58,16 @@ public class RepsNumberButton extends ElegantNumberButton {
     public void setOnClickListener(OnClickListener onClickListener) {
         super.setOnClickListener(onClickListener);
         this.mClickListener = onClickListener;
+    }
+
+    @Override
+    public void setBackgroundColor(@ColorInt int color) {
+        //super.setBackgroundColor(color);
+        final Resources res = getResources();
+        LinearLayout mLayout = (LinearLayout) findViewById(com.cepheuen.elegantnumberbutton.R.id.layout);
+        Drawable drawable = res.getDrawable(com.cepheuen.elegantnumberbutton.R.drawable.background);
+
+        drawable.setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.SRC));
+        mLayout.setBackground(drawable);
     }
 }
