@@ -6,4 +6,8 @@
 
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+
+    <color name="set_button_success">#4CAF50</color>
+    <color name="set_button_warning">#F9A825</color>
+    <color name="set_button_default">#9E9E9E</color>
 </resources>

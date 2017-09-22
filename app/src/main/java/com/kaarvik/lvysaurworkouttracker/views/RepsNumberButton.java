@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
+import com.kaarvik.lvysaurworkouttracker.R;
 
 /**
  *  Extend ElegantNumberButton to allow clicking the textview in the centre displaying the number
@@ -70,4 +71,5 @@ public class RepsNumberButton extends ElegantNumberButton {
         drawable.setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.SRC));
         mLayout.setBackground(drawable);
     }
+
 }

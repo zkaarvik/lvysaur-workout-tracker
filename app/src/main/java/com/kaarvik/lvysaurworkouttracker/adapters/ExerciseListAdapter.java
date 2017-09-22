@@ -83,11 +83,17 @@ public class ExerciseListAdapter extends RecyclerView.Adapter<ExerciseListAdapte
         setListLayout.addView(setView);
 
         final RepsNumberButton button = (RepsNumberButton) setView.findViewById(R.id.button_set_reps);
+        button.setNumber(String.valueOf(set.getGoalReps()));
         button.setOnClickListener(new RepsNumberButton.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int num = Integer.parseInt(button.getNumber());
                 //set.setCompletedReps(num);
+                if( num >= set.getGoalReps()) {
+                    button.setBackgroundColor(view.getResources().getColor(R.color.set_button_success));
+                } else {
+                    button.setBackgroundColor(view.getResources().getColor(R.color.set_button_warning));
+                }
             }
         });
 
