@@ -1,5 +1,9 @@
 package com.kaarvik.lvysaurworkouttracker.data;
 
+import android.content.Context;
+
+import com.kaarvik.lvysaurworkouttracker.R;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 

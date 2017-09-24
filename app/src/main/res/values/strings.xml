@@ -14,6 +14,8 @@
     <string name="exercise_TYPE_BARBELLROWS">Barbell Row</string>
 
     <string name="set_weight">%1$.0flbs x %2$d</string>
+    <string name="weight_lbs">%1$.0flbs</string>
+    <string name="no_added_weight">No added weight</string>
 
     <string-array name="drawer_titles">
         <item>Workout History</item>

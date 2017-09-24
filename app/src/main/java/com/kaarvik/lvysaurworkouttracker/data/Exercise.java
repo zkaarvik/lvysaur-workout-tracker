@@ -1,5 +1,9 @@
 package com.kaarvik.lvysaurworkouttracker.data;
 
+import android.content.Context;
+
+import com.kaarvik.lvysaurworkouttracker.R;
+
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -10,12 +14,18 @@ import io.realm.annotations.PrimaryKey;
 
 public class Exercise extends RealmObject {
 
-
     @PrimaryKey
     private long id;
     private String type;
     private RealmList<Set> sets;
     private RealmList<Set> warmups;
+
+    public final static String TYPE_SQUAT = "TYPE_SQUAT";
+    public final static String TYPE_DEADLIFT = "TYPE_DEADLIFT";
+    public final static String TYPE_OVERHEADPRESS = "TYPE_OVERHEADPRESS";
+    public final static String TYPE_BENCHPRESS = "TYPE_BENCHPRESS";
+    public final static String TYPE_CHINUPS = "TYPE_CHINUPS";
+    public final static String TYPE_BARBELLROWS = "TYPE_BARBELLROWS";
 
     public Exercise() {
         sets = new RealmList<>();
@@ -60,5 +70,29 @@ public class Exercise extends RealmObject {
 
     public void setWarmups(RealmList<Set> warmups) {
         this.warmups = warmups;
+    }
+
+    public static String getTypeText(Context context, String exerciseType) {
+        switch (exerciseType) {
+            case TYPE_SQUAT:
+                return context.getString(R.string.exercise_TYPE_BARBELLROWS);
+            case TYPE_DEADLIFT:
+                return context.getString(R.string.exercise_TYPE_DEADLIFT);
+            case TYPE_OVERHEADPRESS:
+                return context.getString(R.string.exercise_TYPE_OVERHEADPRESS);
+            case TYPE_BENCHPRESS:
+                return context.getString(R.string.exercise_TYPE_BENCHPRESS);
+            case TYPE_CHINUPS:
+                return context.getString(R.string.exercise_TYPE_CHINUPS);
+            case TYPE_BARBELLROWS:
+                return context.getString(R.string.exercise_TYPE_BARBELLROWS);
+            default:
+                return "undefined exercise";
+        }
+    }
+
+    public static boolean isUsingBarbell(String exerciseType) {
+        //Only exercise that doesn't use a barbell is chinups currently
+        return !(exerciseType.equals(TYPE_CHINUPS));
     }
 }

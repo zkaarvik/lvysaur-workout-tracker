@@ -1,13 +1,8 @@
 package com.kaarvik.lvysaurworkouttracker.program;
 
 import com.kaarvik.lvysaurworkouttracker.data.Exercise;
+import com.kaarvik.lvysaurworkouttracker.data.Set;
 import com.kaarvik.lvysaurworkouttracker.data.Workout;
-import com.kaarvik.lvysaurworkouttracker.utils.DataProvider;
-import com.kaarvik.lvysaurworkouttracker.utils.ExerciseType;
-
-import java.util.Date;
-
-import io.realm.Realm;
 
 /*
  * Program defined here: http://i.stack.imgur.com/OUcEY.png
@@ -45,9 +40,9 @@ public class PhrakGreyskullProgram extends WorkoutProgram {
     private Workout buildD1T1Workout() {
         Workout newWorkout = buildWorkout(TYPE_D1T1, -1);
         
-        Exercise overheadPress = buildExcercise(ExerciseType.TYPE_OVERHEADPRESS, 3, 5, 45);
-        Exercise chinups = buildExcercise(ExerciseType.TYPE_CHINUPS, 3, 5, 0);
-        Exercise squats = buildExcercise(ExerciseType.TYPE_SQUAT, 3, 5, 45);
+        Exercise overheadPress = buildExcercise(Exercise.TYPE_OVERHEADPRESS, 3, 5, 45);
+        Exercise chinups = buildExcercise(Exercise.TYPE_CHINUPS, 3, 5, 0);
+        Exercise squats = buildExcercise(Exercise.TYPE_SQUAT, 3, 5, 45);
 
         //Mark last sets as AMRAP
         overheadPress.getSets().get(2).setAmrap(true);

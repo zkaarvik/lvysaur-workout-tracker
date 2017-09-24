@@ -1,21 +1,21 @@
 package com.kaarvik.lvysaurworkouttracker.adapters;
 
-import android.support.v7.widget.ListViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.kaarvik.lvysaurworkouttracker.R;
 import com.kaarvik.lvysaurworkouttracker.data.Exercise;
 import com.kaarvik.lvysaurworkouttracker.data.Set;
-import com.kaarvik.lvysaurworkouttracker.utils.ExerciseType;
+import com.kaarvik.lvysaurworkouttracker.utils.PlateCalculator;
 import com.kaarvik.lvysaurworkouttracker.views.RepsNumberButton;
+
+import org.w3c.dom.Text;
 
 import io.realm.RealmList;
 
@@ -62,20 +62,12 @@ public class ExerciseListAdapter extends RecyclerView.Adapter<ExerciseListAdapte
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Exercise exercise = mDataset.get(position);
-        String exerciseName = ExerciseType.getText(holder.mView.getContext(), exercise.getType());
-
-        TextView textView = (TextView) holder.mView.findViewById(R.id.text_exercise_name);
-        textView.setText(exerciseName);
-
-        //Setup set list
         holder.sets = mDataset.get(position).getSets();
-        LayoutInflater layoutInflater = LayoutInflater.from(holder.mView.getContext());
-        LinearLayout setListLayout = (LinearLayout) holder.mView.findViewById(R.id.set_list);
 
-        for(int i = 0; i < holder.sets.size(); i++){
-            addSetView(layoutInflater, setListLayout, holder.sets.get(i));
-        }
+        setupExerciseName(holder, position);
+        setupSetList(holder, position);
+        setupSetWeight(holder, position);
+        setupPlateCalculator(holder, position);
     }
 
     private View addSetView(LayoutInflater layoutInflater, LinearLayout setListLayout, final Set set) {
@@ -104,5 +96,42 @@ public class ExerciseListAdapter extends RecyclerView.Adapter<ExerciseListAdapte
     @Override
     public int getItemCount() {
         return mDataset.size();
+    }
+
+    private void setupExerciseName(ViewHolder holder, int position) {
+        Exercise exercise = mDataset.get(position);
+        String exerciseName = Exercise.getTypeText(holder.mView.getContext(), exercise.getType());
+
+        TextView exerciseNameTextView = (TextView) holder.mView.findViewById(R.id.text_exercise_name);
+        exerciseNameTextView.setText(exerciseName);
+    }
+
+    private void setupSetList(ViewHolder holder, int position) {
+        LayoutInflater layoutInflater = LayoutInflater.from(holder.mView.getContext());
+        LinearLayout setListLayout = (LinearLayout) holder.mView.findViewById(R.id.set_list);
+
+        for(int i = 0; i < holder.sets.size(); i++){
+            addSetView(layoutInflater, setListLayout, holder.sets.get(i));
+        }
+    }
+
+    private void setupSetWeight(ViewHolder holder, int position) {
+        double setWeight = holder.sets.get(0).getWeight();
+
+        TextView textViewSetWeight = (TextView) holder.mView.findViewById(R.id.text_exercise_weight);
+        textViewSetWeight.setText(holder.mView.getResources().getString(R.string.weight_lbs, setWeight));
+    }
+
+    private void setupPlateCalculator(ViewHolder holder, int position) {
+        Exercise exercise = mDataset.get(position);
+        double setWeight = holder.sets.get(0).getWeight();
+
+        //If empty string, set the plate text to special string
+        String plateCalculatorText = PlateCalculator.calculatePlates(setWeight, exercise.getType());
+        if (plateCalculatorText.equals("")) {
+            plateCalculatorText = holder.mView.getResources().getString(R.string.no_added_weight);
+        }
+        TextView textViewPlateCalculator = (TextView) holder.mView.findViewById(R.id.text_plate_calculator);
+        textViewPlateCalculator.setText(plateCalculatorText);
     }
 }
