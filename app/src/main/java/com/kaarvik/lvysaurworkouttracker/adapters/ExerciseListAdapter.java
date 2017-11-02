@@ -1,10 +1,16 @@
 package com.kaarvik.lvysaurworkouttracker.adapters;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.method.KeyListener;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Adapter;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -32,13 +38,63 @@ public class ExerciseListAdapter extends RecyclerView.Adapter<ExerciseListAdapte
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,
+            View.OnFocusChangeListener {
+
         public View mView;
         public RealmList<Set> sets;
-        public ViewHolder(View v) {
-            super(v);
-            mView = v;
+
+        public TextView textViewSetWeight;
+        public EditText editTextSetWeight;
+
+        public ViewHolder(View view) {
+            super(view);
+            mView = view;
+
+            textViewSetWeight = (TextView) view.findViewById(R.id.text_exercise_weight);
+            textViewSetWeight.setOnClickListener(this);
+
+            editTextSetWeight = (EditText) view.findViewById(R.id.edit_exercise_weight);
+            editTextSetWeight.setOnFocusChangeListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            //Click handler for all registered elements in the exercise view
+
+            if (view.getId() == textViewSetWeight.getId()){
+                //Set weight text pressed, change to edit mode
+                textViewSetWeight.setVisibility(TextView.GONE);
+                editTextSetWeight.setVisibility(EditText.VISIBLE);
+
+                editTextSetWeight.setText(Double.toString(sets.get(0).getWeight()));
+                editTextSetWeight.requestFocus();
+
+                //Open soft keyboard
+                InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(view.getContext().INPUT_METHOD_SERVICE);
+                imm.showSoftInput(editTextSetWeight, InputMethodManager.SHOW_IMPLICIT);
+            }
+        }
+
+        @Override
+        public void onFocusChange(View view, boolean hasFocus) {
+            //Ignore focus events. Only care when focus is lost
+            if (hasFocus) {
+                return;
+            }
+
+            if (view.getId() == editTextSetWeight.getId()) {
+                //Change to display mode. Update the exercise sets with the new weight
+                textViewSetWeight.setVisibility(TextView.VISIBLE);
+                editTextSetWeight.setVisibility(EditText.GONE);
+
+                //Close the soft keyboard
+                InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(view.getContext().INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(textViewSetWeight.getWindowToken(), 0);
+
+                //Handle editText update
+
+            }
         }
     }
 
